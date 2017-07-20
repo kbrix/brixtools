@@ -1,9 +1,64 @@
-
-# Looping function for all model combinations --------------------------------------------
-
-predictor <- c("age", "brt", "dwt", "value", "hp", "year", "code")
-response <- "claim"
-
+#' @title
+#' Fitting regression models of all combinations of covariates using brix
+#'
+#' @description
+#' Helper function for fitting regression models of all combinations of covariates
+#' using brix, see \code{\link{brix}}.
+#'
+#' @details
+#' See \code{\link{brix}}.
+#'
+#' @param response \code{character}, response variable name
+#' @param predictor \code{character}, vector of predictor variable names
+#' @param ll log-likelihood function, see \code{\link{log_likelihood}}
+#' @param data the dataset
+#'
+#' @examples
+#' response <- "claim"
+#'
+#' ### Fitting Poisson log-link models (and measuring time):
+#'
+#' predictor <- c("age", "brt", "dwt")
+#'
+#' start.time1 <- Sys.time()
+#' fit1 <- brix_fitter(response = response,
+#'                     predictor = predictor,
+#'                     log_likelihood(poisson(link = 'log')),
+#'                     data = policy_data)
+#' end.time1 <- Sys.time()
+#' time.taken1 <- end.time1 - start.time1
+#' time.taken1
+#'
+#' ### Comparison with glm
+#' fit1[[8]]
+#' glm(claim ~ age + brt + dwt, data = policy_data, family = poisson('log'))
+#'
+#' \dontrun{
+#' ### Fitting zero-modified log-link models (takes several minutes to run)
+#'
+#' predictor <- c("age", "brt", "dwt", "value", "hp", "year", "code")
+#'
+#' start.time2 <- Sys.time()
+#' fit2 <- brix_fitter(response = response,
+#'                     predictor = predictor,
+#'                     log_likelihood(zmpoisson(link = 'log')),
+#'                     data = policy_data)
+#' end.time2 <- Sys.time()
+#' time.taken2 <- end.time2 - start.time2
+#' time.taken2
+#'
+#' fit2[[128]]
+#'
+#' ### Extracting BIC values and finding the model with the smallest value
+#' bic <- unlist(lapply(fit2, '$.data.frame', 'BIC'))
+#' which.min(bic)
+#'
+#' which(bic %in% sort(lowest)[1:4])
+#'
+#' plot(bic)
+#' }
+#'
+#' @export
 brix_fitter <- function(response, predictor, ll, data) {
     n <- length(predictor)
     l <- rep(list(0:1), n)
@@ -42,51 +97,10 @@ brix_fitter <- function(response, predictor, ll, data) {
     pb <- utils::txtProgressBar(min = 0, max = 2^n, style = 3)
     b <- list()
 
-    # start.time <- Sys.time()
     for (i in 1:2^n) {
         b[[i]] <- brix(start_value = c(rep(0, ncol(Z[[i]])), rep(0.1, length(ll$name))), ll = ll, response = response, design = Z[[i]], data = data)
         utils::setTxtProgressBar(pb, i)
     }
-    # end.time <- Sys.time() time.taken <- end.time - start.time
-
-    # cat('\nCalculation Time:', time.taken, 'seconds')
-
     b
 }
 
-# brix(start_value = rep(0.1, 2), log_likelihood = poisson_log_likelihood, response = response, design = model.matrix(claim ~ age, data =
-# policy_data), data = policy_data)
-
-# brix(start_value = rep(0.1, ncol(Z[[2]])), log_likelihood = poisson_log_likelihood, response = response, design = Z[[2]], data = policy_data)
-# predictor <- c('age', 'brt', 'dwt')
-
-# start.time <- Sys.time() fitter <- brix_fitter(response = response, predictor = predictor, log_likelihood(poisson(link = 'log')), data =
-# policy_data) end.time <- Sys.time() time.taken <- end.time - start.time time.taken
-
-# fitter[[8]]$coef fitter[[8]]$AIC k <- glm(claim ~ age + brt + dwt, data = policy_data, family = poisson('log')) k$coef AIC(k) head(fitter[[8]]$z)
-# head(k$model)
-
-
-# fitter[[40]]$coef fitter[[40]]$AIC k <- glm(claim ~ age + brt + dwt + year, data = policy_data, family = poisson('log')) k$coef AIC(k)
-# head(fitter[[40]]$z) head(k$model)
-
-# exp(fitter[[40]]$coef %*% colMeans(fitter[[40]]$z)) exp(k$coef %*% colMeans(fitter[[40]]$z)) mean(policy_data$claim)
-
-# fitter[[128]]$coef fitter[[128]]$AIC k <- glm(claim ~ age + brt + dwt + value + hp + year + code, data = policy_data, family = poisson('log'))
-# k$coef AIC(k) head(fitter[[128]]$z) head(k$model)
-
-# summary(fitter[[128]]) summary(k)
-
-# str(fitter[[1]]) lapply(fitter, '[[', 14) lapply(fitter, '$.data.frame', 'AIC')
-
-
-
-
-# start.time2 <- Sys.time() fitter2 <- brix_fitter(response = response, predictor = predictor, log_likelihood(zmpoisson(link = 'log')), data =
-# policy_data) end.time2 <- Sys.time() time.taken2 <- end.time2 - start.time2 time.taken2
-
-# fitter2[[128]] a <- unlist(lapply(fitter2, '$.data.frame', 'BIC')) which.min(a)
-
-# which(a %in% sort(a)[1:4])
-
-# plot(unlist(lapply(fitter2, '$.data.frame', 'deviance')))

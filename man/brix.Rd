@@ -27,6 +27,8 @@ Estimates parameters by the method of maximum likelihood in the chosen model alo
 }
 \details{
 The maximization of the log-likelihood function specified is done using the \code{\link{optim}}.
+
+ddd
 }
 \examples{
 brix(start_value = c(0, 0),
@@ -54,4 +56,5 @@ brix(start_value = c(0, 0, 0.1),
      response = 'claim',
      design = model.matrix(claim ~ age, data = policy_data),
      data = policy_data)
+
 }

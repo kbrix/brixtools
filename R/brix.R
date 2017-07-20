@@ -1,7 +1,10 @@
+#' @title
 #' Fitting regression models using maximum likelihood
 #'
+#' @description
 #' Estimates parameters by the method of maximum likelihood in the chosen model along with other useful quantities.
 #'
+#' @details
 #' The maximization of the log-likelihood function specified is done using the \code{\link{optim}}.
 #'
 #' @param start_value real valued vector of start values for the parameters.
@@ -38,6 +41,7 @@
 #'      response = 'claim',
 #'      design = model.matrix(claim ~ age, data = policy_data),
 #'      data = policy_data)
+#'
 #' @export
 brix <- function(start_value, ll, formula = NULL, response = NULL, design = NULL, data, ...) {
 
