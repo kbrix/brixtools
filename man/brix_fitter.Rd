@@ -15,6 +15,12 @@ brix_fitter(response, predictor, ll, data)
 
 \item{data}{the dataset}
 }
+\value{
+\code{brix_fitter} returns a \strong{list} of objects of \code{\link{class}} "brix".
+Each object in the list is a model. If there are \eqn{n =} \code{length(predictor)}
+covariates (excluding the intercept), then there are \eqn{2^n} different model
+combinations. See \code{\link{brix}} for more infomation.
+}
 \description{
 Helper function for fitting regression models of all combinations of covariates
 using brix, see \code{\link{brix}}.

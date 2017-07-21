@@ -1,0 +1,39 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, echo = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "README-"
+)
+```
+
+# brixtools
+
+Under construction...
+
+The goal of brixtools is to make it easier to model non-life insurance data with
+deductibles using maximum likelihood methods. The inclusion of the deductibles in
+the models is mathematically sound.
+
+## Installation
+
+You can install brixtools from github with:
+
+```{r gh-installation, eval = FALSE}
+# install.packages("devtools")
+devtools::install_github("kbrix/brixtools")
+```
+
+## Example
+
+This is a basic example which shows you how to solve a common problem not yet
+included:
+
+```{r example}
+## basic example code
+```

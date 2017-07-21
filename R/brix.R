@@ -2,18 +2,43 @@
 #' Fitting regression models using maximum likelihood
 #'
 #' @description
-#' Estimates parameters by the method of maximum likelihood in the chosen model along with other useful quantities.
+#' Estimates parameters by the method of maximum likelihood in the chosen model
+#' along with other useful quantities.
 #'
 #' @details
-#' The maximization of the log-likelihood function specified is done using the \code{\link{optim}}.
+#' The maximization of the log-likelihood function specified is done using the
+#' \code{\link{optim}} function. The \code{response} and \code{design} arguments
+#' are meant to be used together instead of the \code{formula} argument, although using
+#' \code{formula} is usually prefered.
 #'
-#' @param start_value real valued vector of start values for the parameters.
+#' @return
+#' \code{brix} returns an object of \code{\link{class}} "brix". The function summary
+#' can be used to print a summary of the model.
+#'
+#' An object of class "brix" is a list containing at least the following components:
+#'
+#' \item{par}{a named vector of maximum likelihood estimates.}
+#' \item{value}{maximum log-likelihood value.}
+#' \item{hessian}{estimate of the Hessian at the maximum log-likelihood value
+#'  from \code{optim}.}
+#' \item{z}{design/model matrix.}
+#' \item{data}{data frame used for regression.}
+#' \item{coef}{the same as \code{par}.}
+#' \item{null.deviance}{the deviance for the null model, comparable with deviance.}
+#' \item{deviance}{the deviance for the current model.}
+#' \item{AIC, BIC}{The Akaike Information Criterion and the Bayesian Information
+#' Criterion.}
+#'
+#' @param start_value a \code{numeric} vector of starting values for the parameters.
 #' @param ll log-likelihood function, see \code{\link{log_likelihood}}.
-#' @param formula a symbolic description of the of the model to be fitted, see 'Details' for more information.
-#' @param response name of response variable
-#' @param design design/model matrix, see e.g. \code{\link{model.matrix}}
-#' @param data the dataset
+#' @param formula \code{formula}, a symbolic description of the of the model to be fitted,
+#' see e.g. \code{\link{formula}}.
+#' @param response \code{character}, name of response variable.
+#' @param design \code{matrix}, design/model matrix, see e.g. \code{\link{model.matrix}}.
+#' @param data \code{data.frame}, the dataset used for regression.
 #' @param ... additional arguments passed to optim
+#'
+#'
 #'
 #' @examples
 #' brix(start_value = c(0, 0),
