@@ -21,7 +21,7 @@ see e.g. \code{\link{formula}}.}
 
 \item{data}{\code{data.frame}, the dataset used for regression.}
 
-\item{...}{additional arguments passed to optim}
+\item{...}{additional arguments passed to optim.}
 }
 \value{
 \code{brix} returns an object of \code{\link{class}} "brix". The function summary

@@ -6,21 +6,21 @@
 \title{Policy data}
 \format{A data frame with 6111 observations (rows) and 10 variables (columns):
 \describe{
-  \item{time}{Fraction of the year the policy is active, also called the exposure}
-  \item{deductible}{The deductible in USD, after taking the logarithm}
-  \item{age}{Age of the ship in years}
-  \item{brt}{Gross tonnage of the ship, after taking the logarithm}
-  \item{dwt}{Deadweight tonnage of the ship, after taking the logarithm}
-  \item{value}{Sum insured in USD, after taking the logrithm}
-  \item{hp}{Horsepowers}
-  \item{year}{Year of insurance}
-  \item{code}{Type of ship, 1 is bulk and 2 is cargo}
-  \item{claim}{Number of claims on that policy that year}
+  \item{time}{Fraction of the year the policy is active, also called the exposure.}
+  \item{deductible}{The deductible in USD, after taking the logarithm.}
+  \item{age}{Age of the ship in years.}
+  \item{brt}{Gross tonnage of the ship, after taking the logarithm.}
+  \item{dwt}{Deadweight tonnage of the ship, after taking the logarithm.}
+  \item{value}{Sum insured in USD, after taking the logrithm.}
+  \item{hp}{Horsepowers.}
+  \item{year}{Year of insurance.}
+  \item{code}{Type of ship, 1 is bulk and 2 is cargo.}
+  \item{claim}{Number of claims on that policy that year.}
 }}
 \usage{
 policy_data
 }
 \description{
-Policy data from insurance company
+Policy data from insurance company.
 }
 \keyword{datasets}

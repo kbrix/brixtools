@@ -7,13 +7,13 @@
 brix_fitter(response, predictor, ll, data)
 }
 \arguments{
-\item{response}{\code{character}, response variable name}
+\item{response}{\code{character}, response variable name.}
 
-\item{predictor}{\code{character}, vector of predictor variable names}
+\item{predictor}{\code{character}, vector of predictor variable names.}
 
-\item{ll}{log-likelihood function, see \code{\link{log_likelihood}}}
+\item{ll}{log-likelihood function, see \code{\link{log_likelihood}}.}
 
-\item{data}{the dataset}
+\item{data}{\code{data.frame}, the dataset used for regression.}
 }
 \value{
 \code{brix_fitter} returns a \strong{list} of objects of \code{\link{class}} "brix".

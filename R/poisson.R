@@ -2,17 +2,20 @@
 
 #' Poisson log-likelihood for regression purposes.
 #'
-#' Poisson log-likelihood for regression purposes to be used with \code{\link{brix}}, see also \code{\link{log_likelihood}}.
+#' Poisson log-likelihood for regression purposes to be used with
+#' \code{\link{brix}}, see also \code{\link{log_likelihood}}.
 #'
-#' @param beta numeric vector of parameters
-#' @param z model/design matrix, see e.g. \code{\link{model.matrix}}
-#' @param x vector of (non-negative integer) quantiles
-#' @param link link function, the default is the logarithm, but the identity is also avalible
-#' @param sum logical, default is TRUE
+#' @param beta \code{numeric} vector of parameters.
+#' @param z \code{matrix}, model/design matrix, see e.g. \code{\link{model.matrix}}.
+#' @param x \code{numeric} vector of (non-negative integer) quantiles.
+#' @param link link function, the default is the logarithm,
+#' but the identity is also avalible.
+#' @param sum \code{logical}, default is \code{TRUE}.
 #' @name log_likelihood_poisson
 #'
 #' @return
-#' The output is a numeric value, make sure the dimension of beta and z are legal for matrix multiplication, see the examples.
+#' The output is a \code{numeric} value. Make sure the dimension of
+#' \code{beta} and \code{z} are legal for matrix multiplication, see the examples.
 #'
 #' @examples
 #' x <- policy_data$claim

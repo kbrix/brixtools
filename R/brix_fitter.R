@@ -14,10 +14,10 @@
 #' covariates (excluding the intercept), then there are \eqn{2^n} different model
 #' combinations. See \code{\link{brix}} for more infomation.
 #'
-#' @param response \code{character}, response variable name
-#' @param predictor \code{character}, vector of predictor variable names
-#' @param ll log-likelihood function, see \code{\link{log_likelihood}}
-#' @param data the dataset
+#' @param response \code{character}, response variable name.
+#' @param predictor \code{character}, vector of predictor variable names.
+#' @param ll log-likelihood function, see \code{\link{log_likelihood}}.
+#' @param data \code{data.frame}, the dataset used for regression.
 #'
 #' @examples
 #' response <- "claim"

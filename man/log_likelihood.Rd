@@ -7,13 +7,15 @@
 log_likelihood(fam)
 }
 \arguments{
-\item{fam}{a description of the the distribution and link function to specify the log-likelihood}
+\item{fam}{a description of the the distribution and link function
+to specify the log-likelihood, see "Details".}
 }
 \description{
 Generic log-likelihood for regression purposes to be used with \code{\link{brix}}.
 }
 \details{
-The options for \emph{fam} is either poisson() or zmpoisson(), see \code{\link{log_likelihood_poisson}} and \code{\link{log_likelihood_zmpoisson}}
+The options for \code{fam} argument are either \code{poisson} or
+\code{zmpoisson}.
 }
 \examples{
 x <- policy_data$claim
@@ -37,4 +39,7 @@ model2 <- brix(start_value = c(0, 0, 0, 0, 0, 0.1),
                data = policy_data)
 model2
 summary(model2)
+}
+\seealso{
+\code{\link{log_likelihood_poisson}}, \code{\link{log_likelihood_zmpoisson}}.
 }

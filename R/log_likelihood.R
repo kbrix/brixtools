@@ -1,13 +1,20 @@
 # Generic log-likelihood -------------------------------------------------------------------------------------
 
-#'  Generic log-likelihood for regression purposes.
+#' @title
+#' Generic log-likelihood for regression purposes.
 #'
-#'  Generic log-likelihood for regression purposes to be used with \code{\link{brix}}.
+#' @description
+#' Generic log-likelihood for regression purposes to be used with \code{\link{brix}}.
 #'
-#' @param fam a description of the the distribution and link function to specify the log-likelihood
+#' @param fam a description of the the distribution and link function
+#' to specify the log-likelihood, see "Details".
 #'
 #' @details
-#' The options for \emph{fam} is either poisson() or zmpoisson(), see \code{\link{log_likelihood_poisson}} and \code{\link{log_likelihood_zmpoisson}}
+#' The options for \code{fam} argument are either \code{poisson} or
+#' \code{zmpoisson}.
+#'
+#' @seealso
+#' \code{\link{log_likelihood_poisson}}, \code{\link{log_likelihood_zmpoisson}}.
 #'
 #' @examples
 #' x <- policy_data$claim

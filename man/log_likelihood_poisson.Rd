@@ -14,21 +14,24 @@ log_likelihood_poisson_log(beta, z, x, sum = TRUE)
 log_likelihood_poisson_id(beta, z, x, sum = TRUE)
 }
 \arguments{
-\item{beta}{numeric vector of parameters}
+\item{beta}{\code{numeric} vector of parameters.}
 
-\item{z}{model/design matrix, see e.g. \code{\link{model.matrix}}}
+\item{z}{\code{matrix}, model/design matrix, see e.g. \code{\link{model.matrix}}.}
 
-\item{x}{vector of (non-negative integer) quantiles}
+\item{x}{\code{numeric} vector of (non-negative integer) quantiles.}
 
-\item{link}{link function, the default is the logarithm, but the identity is also avalible}
+\item{link}{link function, the default is the logarithm,
+but the identity is also avalible.}
 
-\item{sum}{logical, default is TRUE}
+\item{sum}{\code{logical}, default is \code{TRUE}.}
 }
 \value{
-The output is a numeric value, make sure the dimension of beta and z are legal for matrix multiplication, see the examples.
+The output is a \code{numeric} value. Make sure the dimension of
+\code{beta} and \code{z} are legal for matrix multiplication, see the examples.
 }
 \description{
-Poisson log-likelihood for regression purposes to be used with \code{\link{brix}}, see also \code{\link{log_likelihood}}.
+Poisson log-likelihood for regression purposes to be used with
+\code{\link{brix}}, see also \code{\link{log_likelihood}}.
 }
 \examples{
 x <- policy_data$claim

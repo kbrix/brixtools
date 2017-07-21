@@ -36,7 +36,7 @@
 #' @param response \code{character}, name of response variable.
 #' @param design \code{matrix}, design/model matrix, see e.g. \code{\link{model.matrix}}.
 #' @param data \code{data.frame}, the dataset used for regression.
-#' @param ... additional arguments passed to optim
+#' @param ... additional arguments passed to optim.
 #'
 #'
 #'

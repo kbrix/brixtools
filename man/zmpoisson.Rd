@@ -7,10 +7,12 @@
 zmpoisson(link = "log")
 }
 \arguments{
-\item{link}{link function, the default is "log", but "identity" is also avalible}
+\item{link}{link function, the default is the logarithm,
+but the identity is also avalible.}
 }
 \description{
-Family for use with \code{\link{brix}}, implementing regression for zero-modified Poisson data.
+Family for use with \code{\link{brix}}, implementing regression for
+zero-modified Poisson data.
 }
 \examples{
 zmpoisson(link = "log")
