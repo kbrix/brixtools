@@ -1,0 +1,147 @@
+---
+title: "Vignette Title"
+author: "Kristoffer Brix"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+\usepackage{amsmath}
+\usepackage{bm}
+
+
+## Weibull regression 
+
+Let $X \sim W(a, \gamma)$, we say that $X$ is Weibull distributed with shape parameter $a > 0$ and scale parameter $\gamma > 0$. The distribution function is:
+
+$$
+F_X(x) = 1 - e^{- \left( \frac{x}{a} \right)^\gamma}, 
+\qquad x > 0.
+$$
+Taking the derivative gives
+
+$$
+f_X(x)
+= 
+a^{- \gamma} \gamma x^{\gamma -1} e^{- a^{- \gamma} x^\gamma}
+=
+\left( \frac{x}{a} \right)^\gamma \gamma x^{-1} e^{- \left( \frac{x}{a} \right)^\gamma},
+\qquad x > 0,
+$$
+and the expectation is 
+
+$$
+EX = a \Gamma \left( 1 + \frac{1}{\gamma} \right).
+$$
+
+Let $\boldsymbol X = (X_1, \dots, X_n) \sim W(\boldsymbol a, \gamma)$. By this, we mean that the components of the random vector $\boldsymbol X$ are Weibul distributed, $X_i \sim W(a_i, \gamma)$, where $a_i > 0$ and $\gamma > 0$ for $i = 1, \dots, n$. We use the natural regression $\boldsymbol a = e^{\boldsymbol{Z \beta}}$, where $\boldsymbol Z$ is a $n \times p$ design/model matrix and $\boldsymbol \beta$ is a $p$-dimensional column vector. Component-wise, we get $a_i = e^{\boldsymbol{z_i \beta}}$, using 
+
+$$
+\boldsymbol Z
+ =
+ \begin{pmatrix}
+  z_{11} & z_{12} & \cdots & z_{1p} \\
+  z_{21} & z_{22} & \cdots & z_{2p} \\
+  \vdots & \vdots & \ddots & \vdots \\
+  z_{n1} & z_{n1} & \cdots & z_{np}
+ \end{pmatrix}
+ =
+ \begin{pmatrix}
+  \boldsymbol z_1 \\ 
+  \boldsymbol z_2 \\
+  \vdots \\ 
+  \boldsymbol z_n
+ \end{pmatrix},
+$$
+
+where $\boldsymbol z_i = (z_{i1}, \dots, z_{ip})$ are $p$-dimensional row vectors for $i = 1, \dots, n$.
+
+The log-likelihood is then
+
+\begin{align}
+l(\boldsymbol \beta, b; \boldsymbol x)
+&=
+n \log \gamma
+-
+\sum_{i = 1}^n
+\left(
+\gamma \: \log a_i - (\gamma - 1) \log x_i + a_i^{-\gamma} x_i^\gamma 
+\right)
+\\
+&= 
+n \log \gamma
+-
+\sum_{i = 1}^n
+\left( 
+\gamma \: \boldsymbol{z_i \beta} - (\gamma-1) \log x_i 
++ e^{-\gamma \: \boldsymbol{z_i \beta}} x_i^\gamma
+\right).
+\end{align}
+
+With the inclusion of a deductible $d_i > 0$ for each claim $x_i > 0$, we instead get
+$$
+l(\boldsymbol \beta, b; \boldsymbol x)
+=
+n \log \gamma
+-
+\sum_{i = 1}^n
+\left( 
+\gamma \: \boldsymbol{z_i \beta} - (\gamma-1) \log x_i 
++ e^{-\gamma \: \boldsymbol{z_i \beta}} 
+\left( x_i^\gamma - d_i^\gamma \right)
+\right).
+$$
+A natural reparametrization is to let $\boldsymbol \alpha = \gamma \boldsymbol \beta$, such that...
+
+
+
+
+Vignettes are long form documentation commonly included in packages. Because they are part of the distribution of the package, they need to be as compact as possible. The `html_vignette` output type provides a custom style sheet (and tweaks some options) to ensure that the resulting html is as small as possible. The `html_vignette` format:
+
+- Never uses retina figures
+- Has a smaller default figure size
+- Uses a custom CSS stylesheet instead of the default Twitter Bootstrap style
+
+## Vignette Info
+
+Note the various macros within the `vignette` section of the metadata block above. These are required in order to instruct R how to build the vignette. Note that you should change the `title` field and the `\VignetteIndexEntry` to match the title of your vignette.
+
+## Styles
+
+The `html_vignette` template includes a basic CSS theme. To override this theme you can specify your own CSS in the document metadata as follows:
+
+    output: 
+      rmarkdown::html_vignette:
+        css: mystyles.css
+
+## Figures
+
+The figure sizes have been customised so that you can easily put two images side-by-side. 
+
+```{r, fig.show='hold'}
+plot(1:10)
+plot(10:1)
+```
+
+You can enable figure captions by `fig_caption: yes` in YAML:
+
+    output:
+      rmarkdown::html_vignette:
+        fig_caption: yes
+
+Then you can use the chunk option `fig.cap = "Your figure caption."` in **knitr**.
+
+## More Examples
+
+You can write math expressions, e.g. $Y = X\beta + \epsilon$, footnotes^[A footnote here.], and tables, e.g. using `knitr::kable()`.
+
+```{r, echo=FALSE, results='asis'}
+knitr::kable(head(mtcars, 10))
+```
+
+Also a quote using `>`:
+
+> "He who gives up [code] safety for [code] speed deserves neither."
+([via](https://twitter.com/hadleywickham/status/504368538874703872))

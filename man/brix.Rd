@@ -78,4 +78,14 @@ brix(start_value = c(0, 0, 0.1),
      design = model.matrix(claim ~ age, data = policy_data),
      data = policy_data)
 
+brix(start_value = c(1, 1, 0.1),
+     ll = log_likelihood(fam = weibull(link = "log")),
+     formula = claim ~ age,
+     data = claim_data)
+
+ brix(start_value = c(1, 1, 0.1),
+     ll = log_likelihood(fam = weibull(link = "identity")),
+     formula = claim ~ age,
+     data = claim_data)
+
 }

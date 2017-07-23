@@ -41,21 +41,26 @@
 #' @export
 log_likelihood <- function(fam) {
 
-    if (fam$family == "poisson" && fam$link == "log") {
-        fun = log_likelihood_poisson_log
-    }
-    if (fam$family == "poisson" && fam$link == "identity") {
-        fun = log_likelihood_poisson_id
-    }
+  if (fam$family == "poisson" && fam$link == "log") {
+      fun = log_likelihood_poisson_log
+  }
+  if (fam$family == "poisson" && fam$link == "identity") {
+      fun = log_likelihood_poisson_id
+  }
 
-    if (fam$family == "zmpoisson" && fam$link == "log") {
-        # not yet implemented
-        fun = log_likelihood_zmpoisson_log
-    }
-    if (fam$family == "zmpoisson" && fam$link == "identity") {
-        # not yet implemented
-        fun = log_likelihood_zmpoisson_id
-    }
+  if (fam$family == "zmpoisson" && fam$link == "log") {
+      fun = log_likelihood_zmpoisson_log
+  }
+  if (fam$family == "zmpoisson" && fam$link == "identity") {
+      fun = log_likelihood_zmpoisson_id
+  }
+  #Weibull
+  if (fam$family == "weibull" && fam$link == "log") {
+      fun = log_likelihood_weibull_log
+  }
+  if (fam$family == "weibull" && fam$link == "identity") {
+      fun = log_likelihood_weibull_id
+  }
     # do not delete
     objects <- list(info = fam, fun = fun, name = fam$name)  ##!!!
 }
