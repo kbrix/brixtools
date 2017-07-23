@@ -24,6 +24,7 @@ zmpoisson <- function(link = "log") {
 #' @param beta \code{numeric} vector of parameters.
 #' @param z \code{matrix}, model/design matrix, see e.g. \code{\link{model.matrix}}.
 #' @param x \code{numeric} vector of (non-negative integer) quantiles.
+#' @param d \code{numeric} vector of deductibles.
 #' @param link link function, the default is the logarithm, but the identity
 #' is also avalible.
 #' @param sum \code{logical}, default is \code{TRUE}.
@@ -51,7 +52,7 @@ NULL
 
 #' @rdname log_likelihood_zmpoisson
 #' @export
-log_likelihood_zmpoisson <- function(beta, z, x, link = "log", sum = TRUE) {
+log_likelihood_zmpoisson <- function(beta, z, x, d = 0, link = "log", sum = TRUE) {
 
   if(link == "log") {
     return(log_likelihood_zmpoisson_log(beta = beta, z = z, x = x, sum = sum))
@@ -65,7 +66,7 @@ log_likelihood_zmpoisson <- function(beta, z, x, link = "log", sum = TRUE) {
 
 #' @rdname log_likelihood_zmpoisson
 #' @export
-log_likelihood_zmpoisson_log <- function(beta, z, x, sum = TRUE) {
+log_likelihood_zmpoisson_log <- function(beta, z, x, d = 0, sum = TRUE) {
 
   p0 <- beta[length(beta)]
   beta <- beta[-length(beta)]
@@ -98,7 +99,7 @@ log_likelihood_zmpoisson_log <- function(beta, z, x, sum = TRUE) {
 
 #' @rdname log_likelihood_zmpoisson
 #' @export
-log_likelihood_zmpoisson_id <- function(beta, z, x, sum = TRUE) {
+log_likelihood_zmpoisson_id <- function(beta, z, x, d = 0, sum = TRUE) {
 
   p0 <- beta[length(beta)]
   beta <- beta[-length(beta)]

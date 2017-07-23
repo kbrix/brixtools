@@ -101,3 +101,4 @@ log_likelihood_weibull_id <- function(beta, z, x, d = 0, sum = TRUE) {
 
 }
 
+

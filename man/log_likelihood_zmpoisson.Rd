@@ -7,11 +7,11 @@
 \alias{log_likelihood_zmpoisson_id}
 \title{Zero-modified Poisson log-likelihood for regression purposes}
 \usage{
-log_likelihood_zmpoisson(beta, z, x, link = "log", sum = TRUE)
+log_likelihood_zmpoisson(beta, z, x, d = 0, link = "log", sum = TRUE)
 
-log_likelihood_zmpoisson_log(beta, z, x, sum = TRUE)
+log_likelihood_zmpoisson_log(beta, z, x, d = 0, sum = TRUE)
 
-log_likelihood_zmpoisson_id(beta, z, x, sum = TRUE)
+log_likelihood_zmpoisson_id(beta, z, x, d = 0, sum = TRUE)
 }
 \arguments{
 \item{beta}{\code{numeric} vector of parameters.}
@@ -19,6 +19,8 @@ log_likelihood_zmpoisson_id(beta, z, x, sum = TRUE)
 \item{z}{\code{matrix}, model/design matrix, see e.g. \code{\link{model.matrix}}.}
 
 \item{x}{\code{numeric} vector of (non-negative integer) quantiles.}
+
+\item{d}{\code{numeric} vector of deductibles.}
 
 \item{link}{link function, the default is the logarithm, but the identity
 is also avalible.}

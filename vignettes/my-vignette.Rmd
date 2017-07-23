@@ -95,6 +95,82 @@ n \log \gamma
 $$
 A natural reparametrization is to let $\boldsymbol \alpha = \gamma \boldsymbol \beta$, such that...
 
+## Zero-inflated Poisson regression
+
+Let $M$ be a counting distribution on $\mathbb N_0$ and let $I$ be Bernoulli distributed, $I \sim \text{Bernoulli}(1-p)$, $p \in (0,1)$, with $I$ independent of $M$, then define $N = I \cdot M$.
+
+The distribution of $N$ is 
+
+\begin{align*}
+P(N = 0) &= P(I = 0) + P(I = 1, \: M = 0) = p + (1 - p) \cdot P(M = 0), \\
+P(N = n) &= P(I = 1, \: M = n) = (1 - p) \cdot P(M = n), \qquad n \in \mathbb N.
+\end{align*}
+
+Since it always holds that $P(N = 0) > P(M = 0)$, we call $N$ a zero-inflated version of $M$. When $M$ is Poisson distributed, i.e. $M \sim \text{Poisson}(\lambda)$, $\lambda > 0$, we say that $N$ is zero-inflated Poisson distributed and write $N \sim \text{ZIP}(\lambda, p)$, in this case, we have
+
+\begin{align*}
+P(N = 0) &=  p + (1 - p) \cdot e^{-\lambda}, \\
+P(N = n) &= (1 - p) \cdot \frac{\lambda^n}{n!} e^{-\lambda}, \qquad n \in \mathbb N.
+\end{align*}
+
+### Proposition
+Let $N^* \sim \text{Poisson}(\lambda)$, $\lambda > 0$ and let $N^* = N + M$, where
+
+$$
+N = \sum_{i = 1}^{N^*} I_i
+\qquad \text{and} \qquad M = \sum_{i = 1}^{N^*} (1 - I_i), 
+$$
+
+and the $I_i$ are i.i.d. Bernoulli distributed with success parameter $q \in (0,1)$. Then
+
+$$
+N \sim \text{Poisson}\left( q \cdot \lambda \right) 
+\: {\perp\!\!\!\!\perp} \: 
+M \sim \text{Poisson}\left( (1-q) \cdot \lambda \right).
+$$
+*Proof*. Note that $(N \mid N^* = n^*) \sim \text{Bin}(n^*, q)$, therefore, with $n + m = n^*$, we have
+
+\begin{align*}
+ P(N = n, \: M = m)
+ &= P(N = n, \: N^* = n + m) \\
+ &= P(N = n \mid N^* = n + m) P(N^* = n + m) \\
+ &= 
+ \frac{(n + m)!}{n! m!} q^n (1-q)^m
+ \frac{\lambda^{n+m}}{(n+m)!} e^{-\lambda} \\
+ &=
+ \frac{(q\lambda)^n}{n!} e^{-q\lambda}
+ \frac{((1-q) \lambda)^m}{m!} e^{-(1-q) \lambda} \\
+ &=
+ P(N = n) P(M = m).
+ 
+\end{align*}
+
+Which proves the result.
+
+We say that a family of distributions $\mathscr F$ is closed under *thinning* if whenever $N^*$ is in $\mathscr F$, then any *thinned* version $N$ (as in the above) is also in $\mathscr F$. The above results show that the Poisson distribution is closed under thinning. 
+
+It also holds that the zero-inflated Poisson distribution is closed under thinning. Let $N^* = I \cdot M$ and set
+
+$$
+N_1 = \sum_{i = 1}^{N^*} I_i,
+\quad
+M = \sum_{i = 1}^{M^*} I_i
+\qquad \text{and} \quad 
+N_2 = I \cdot M,
+$$
+where the $I_i$ are i.i.d. Bernoulli distributed with success parameter $q \in (0,1)$, independent of $M^*$ and $I_i$. It is easy to see, say, using characteristic functions, that $N_1$ and $N_2$ have the same distribution.
+
+Thus, a zero-inflated thinned random variable $N_2$ has the same distribution as the thinned version of the zero-inflated original random variable $N_1$. In particular, we have that
+$$
+N^∗ \sim \text{ZIP}(\lambda, \: p)
+\quad \Longrightarrow \quad 
+N_1 \sim \text{ZIP}(q \cdot \lambda, \: p),
+$$
+so the zero-inflated Poisson distribution is also closed under thinning. This actually holds for all $q > 0$ using a Poisson process argument. 
+
+\ 
+&nbsp;
+
 
 
 
