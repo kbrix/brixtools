@@ -14,15 +14,14 @@ knitr::opts_chunk$set(
 
 # brixtools
 
-Under construction...
+The package and site are still under construction...
 
 The goal of brixtools is to make it easier to model non-life insurance data with
-deductibles using maximum likelihood methods. The inclusion of the deductibles in
-the models is mathematically sound.
+deductibles using maximum likelihood methods.
 
 ## Installation
 
-You can install brixtools from github with:
+You can currently install brixtools from github with:
 
 ```{r gh-installation, eval = FALSE}
 # install.packages("devtools")
@@ -31,9 +30,31 @@ devtools::install_github("kbrix/brixtools")
 
 ## Example
 
-This is a basic example which shows you how to solve a common problem not yet
-included:
+Included in the package is a simulated data set of 10000 policies. See the documentation for `normal_poisson_policy`. Below is one of the policies with two losses, but only one (reported) claim:
 
-```{r example}
-## basic example code
+```{r example, tidy=TRUE}
+library(brixtools)
+occurrence <- lapply(normal_poisson_policy, function(x) unlist(x["occurrence"]))
+reported <- lapply(normal_poisson_policy, function(x) unlist(x["reported"]))
+set <- intersect(which(occurrence == 2), which(reported == 1))[1]
+normal_poisson_policy[[set]]
 ```
+
+Since the losses (and therefore also claims) within each policy are assumed i.i.d., we can simplify the indexing of the data to ease numerical procedures, see `normal_poisson_x` and `normal_poisson_n`.
+
+The Normal-Poisson log-likelihood is called using `normal_poisson_log_likelihood` and can be used with `brix_simple` to find the optimum yielding the maximum likelihood estimates of the parameters:
+
+```{r}
+model <- brix_simple(optimizer = optim,
+                     fn = normal_poisson_log_likelihood,
+                     X = normal_poisson_x, N = normal_poisson_n,
+                     par = rep(1, 3),
+                     control = list(fnscale = -1),
+                     method = "Nelder-Mead",
+                     hessian = TRUE)
+summary(model)
+```
+
+The true parameter values are 1.5 for the mean and standard deviation for the normal distribution and the mean for the non-thinned Poisson is 0.1. The possiblities for extensions are very large.
+
+

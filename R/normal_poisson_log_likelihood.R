@@ -28,18 +28,29 @@
 #' @export
 normal_poisson_log_likelihood <- function(parameter = NULL, X = NULL, N = NULL, check = 1) {
 
+  # Define the parameters
   if(check == 1) {
     mean <- parameter[length(parameter)-2]
     sd <- parameter[length(parameter)-1]
     lambda <- parameter[length(parameter)]
 
+    # Claim distribution
     x <- stats::dnorm(X$claim, mean = mean, sd = sd, log = T) - stats::pnorm(X$deductible, mean = mean, sd = sd, lower.tail = FALSE, log.p = TRUE)
 
-    q <- stats::pnorm(N$deductible, lower.tail = FALSE) # thinning factor
-    n <- stats::dpois(N$occurrence, lambda = q * lambda, log = TRUE) # occurrence distribution
+    # Thinning factor
+    q <- stats::pnorm(N$deductible, mean = mean, sd = sd, lower.tail = FALSE)
 
-    ll <- (sum(x) + sum(n)) # log-likelihood
+    # Occurrence distribution
+    # Making sure lambda is defined
+    if(lambda < 0) {
+      lambda <- 1e10
+    }
+    n <- stats::dpois(N$occurrence, lambda = q * lambda, log = TRUE)
 
+    # Log-likelihood
+    ll <- (sum(x) + sum(n))
+
+    # Making sure the log-likelihood is defined
     if(is.na(ll)) {
       ll <- -1e10
     } else if (ll == -Inf) {

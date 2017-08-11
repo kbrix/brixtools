@@ -18,7 +18,7 @@ Each policy consists of the following:
   \item{claim}{The \code{loss} given that it is larger than the \code{deductible}.
   Returns \code{numeric(0)} if \code{occurrence} is zero or if all losses are smaller than
   the \code{deductible}.}
-  \item{length}{Length of \code{claim}. Returns zero if \code{claim} is \code{numeric(0)}.}
+  \item{reported}{Length of \code{claim}. Returns zero if \code{claim} is \code{numeric(0)}.}
 }
 
 The object \code{normal_poisson_n} is a \code{data.frame} with 10000 rows (policies) and 3

@@ -1,10 +1,6 @@
 m <- 10000 # number of policy holders
 
 normal_poisson_policy <- list() # initialization
-deductible <- NULL
-occurrence <- NULL
-loss <- NULL
-claim <- NULL
 
 for(i in 1:m) { # loop for policy
 
@@ -16,19 +12,19 @@ for(i in 1:m) { # loop for policy
 
   claim <- loss[loss > deductible] # what we observe
 
-  length <- length(claim)
+  reported <- length(claim)
 
   normal_poisson_policy[[i]] <- list(deductible = deductible,
                                      occurrence = occurrence,
                                      loss = loss,
                                      claim = claim,
-                                     length = length)
+                                     reported = reported)
 }
 
 # Occurrences with associated deductible
 normal_poisson_n <- as.data.frame(cbind(occurrence = unlist(lapply(normal_poisson_policy, function(x) x$occurrence)),
                                         deductible = unlist(lapply(normal_poisson_policy, function(x) x$deductible)),
-                                        length = unlist(lapply(normal_poisson_policy, function(x) x$length))))
+                                        reported = unlist(lapply(normal_poisson_policy, function(x) x$reported))))
 
 # Claims with associated deductible
 normal_poisson_x <- NULL
@@ -36,7 +32,7 @@ for(i in 1:m) {
 
   policy <- normal_poisson_policy[[i]]
 
-  if(policy["length"] > 0) {
+  if(policy["reported"] > 0) {
 
     claim <- policy$claim
 
