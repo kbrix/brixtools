@@ -36,7 +36,9 @@ $$
 EX = a \Gamma \left( 1 + \frac{1}{\gamma} \right).
 $$
 
-Let $\boldsymbol X = (X_1, \dots, X_n) \sim W(\boldsymbol a, \gamma)$. By this, we mean that the components of the random vector $\boldsymbol X$ are Weibul distributed, $X_i \sim W(a_i, \gamma)$, where $a_i > 0$ and $\gamma > 0$ for $i = 1, \dots, n$. We use the natural regression $\boldsymbol a = e^{\boldsymbol{Z \beta}}$, where $\boldsymbol Z$ is a $n \times p$ design/model matrix and $\boldsymbol \beta$ is a $p$-dimensional column vector. Component-wise, we get $a_i = e^{\boldsymbol{z_i \beta}}$, using 
+Let $\boldsymbol X = (X_1, \dots, X_n) \sim W(\boldsymbol a, \gamma)$. By this, we mean that the components of the random vector $\boldsymbol X$ are Weibul distributed, $X_i \sim W(a_i, \gamma)$, where $a_i > 0$ and $\gamma > 0$ for $i = 1, \dots, n$. We also assume they are independent, $X_i {\perp\!\!\!\!\perp} X_j$, for $i \neq j$. 
+
+We use the natural regression $\boldsymbol a = e^{\boldsymbol{Z \beta}}$, where $\boldsymbol Z$ is a $n \times p$ design/model matrix and $\boldsymbol \beta$ is a $p$-dimensional column vector. Component-wise, we get $a_i = e^{\boldsymbol{z_i \beta}}$, using 
 
 $$
 \boldsymbol Z
@@ -82,7 +84,7 @@ n \log \gamma
 
 With the inclusion of a deductible $d_i > 0$ for each claim $x_i > 0$, we instead get
 $$
-l(\boldsymbol \beta, b; \boldsymbol x)
+l(\boldsymbol \beta, b; \boldsymbol x, \boldsymbol d)
 =
 n \log \gamma
 -
@@ -113,8 +115,23 @@ P(N = 0) &=  p + (1 - p) \cdot e^{-\lambda}, \\
 P(N = n) &= (1 - p) \cdot \frac{\lambda^n}{n!} e^{-\lambda}, \qquad n \in \mathbb N.
 \end{align*}
 
-### Proposition
-Let $N^* \sim \text{Poisson}(\lambda)$, $\lambda > 0$ and let $N^* = N + M$, where
+For a positive integer $k$, further calculations yield
+$$
+E[N^k] = E[I^k] E[M^k] = E[I] E[M^k] = (1-p) E[M^k],
+$$
+in particular we have
+
+\begin{align*}
+E[N] &= (1 - p) \lambda, \\
+%
+V[N] 
+&=
+E[N] + \frac{p}{(1 - p)} (E[N])^2 \\
+&=
+(1 - p) \lambda + p (1 - p)^2 \lambda^2.
+\end{align*}
+
+*Proposition*. Let $N^* \sim \text{Poisson}(\lambda)$, $\lambda > 0$ and let $N^* = N + M$, where
 
 $$
 N = \sum_{i = 1}^{N^*} I_i
@@ -168,9 +185,68 @@ N_1 \sim \text{ZIP}(q \cdot \lambda, \: p),
 $$
 so the zero-inflated Poisson distribution is also closed under thinning. This actually holds for all $q > 0$ using a Poisson process argument. 
 
-\ 
-&nbsp;
+With the thinning result in mind, we can introduce the log-likelihood for the thinned zero-inflated Poisson random variable. Let $\boldsymbol N = (N_1, \dots, N_m) \sim \text{ZIP} (\boldsymbol{q \lambda}, \boldsymbol \pi)$, i.e. $N_i \sim \text{ZIP}(q_i \lambda_i, \pi_i)$, where $q_i > 0$, $\lambda_i > 0$ and $\pi_i \in (0,1)$ for $i = 1, \dots, m$. Again, we assume they are independent, $N_i{\perp\!\!\!\!\perp} N_j$ for $i \neq j$.
 
+The log-likelihood is then
+
+\begin{align*}
+l(\boldsymbol \beta, \boldsymbol \pi; \boldsymbol n)
+=
+&1_{\{n_i = 0\}}
+\sum_{i=1}^m 
+\left( 
+ \log \left( p + (1-p_i) q_i \lambda_i \right)
+\right) 
+\\
++
+&1_{\{n_i \neq 0\}}
+\sum_{i=1}^m 
+\left( 
+ \log (1-p_i) + n_i \log q_i + n_i \log \lambda_i - \log n_i! - q_i \lambda_i
+\right).
+\end{align*}
+
+\ 
+
+###lll
+
+Let there be $m$ given policies, where policy $i$ has $N_i$ claims. The sizes of these reported claims are
+
+\begin{align*}
+ X_{ij}, \qquad i = 1, \dots, m, \quad j = 1, \dots, N_i.
+\end{align*}
+
+Of course, if $N_i = 0$, there are no claims. Also, remember that the reported claims are all larger that their respective dedictible, $d_i$. Let $X_{ij} \overset{d}{=} X_i \sim F_i.$
+
+The likelihood is
+
+\begin{align*}
+ L(\theta_1, \theta_2; x, n)
+ =
+ \prod_{i = 1}^m \prod_{j = 1}^{n_i}
+ \left( \frac{f_i(x_{ij}; \theta_1)}{\overline F_i(d_i; \theta_1)} \right)
+ \left( 
+ \prod_{i=1}^m P(N_i = n_i; t_i \overline F_i(d_i; \theta_1), \theta_2)
+  \right).
+\end{align*}
+
+Since the reported claims within the same policy are i.i.d., we may instead write
+
+\begin{align*}
+ L(\theta_1, \theta_2; x, n)
+ =
+ \prod_{k = 1}^{\sum_{i = 1}^m n_i}
+  \left( \frac{f_i(x_{k}; \theta_1)}{\overline F_i(d_k; \theta_1)} \right)
+ \left( 
+ \prod_{i=1}^m P(N_i = n_i; t_i \overline F_i(d_i; \theta_1), \theta_2)
+  \right)
+\end{align*}
+
+to ease the numerical optimization. The $k$ index is for the $k$'th claim occured.
+
+If the number of losses for the whole period is $N_i^* \sim$ Poisson$(\lambda_i)$, for $i = 1, \dots, m$, then the number reported claims is $N_i \sim$ Poisson$(t_i \overline F_i(d_i) \lambda_i)$. As usual, week inference on the parameter $\lambda_i$.
+
+\\
 
 
 
