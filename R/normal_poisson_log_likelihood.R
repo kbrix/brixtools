@@ -59,8 +59,13 @@ normal_poisson_log_likelihood <- function(parameter = NULL, X = NULL, N = NULL, 
 
     return(ll) # PLUS
 
-  } else {
+  }
+
+  if(check == 2) {
     return(c("mean", "sd", "lambda"))
+  }
+  if(check == 3) {
+    return(c("normal-poisson"))
   }
 }
 
@@ -116,7 +121,7 @@ brix_simple <- function(optimizer, fn, ...) {
   info <- eval(call, parent.frame())
 
   fn <- call[[2]]; #fn
-  names <- (do.call(eval(fn), list(check = 0)))
+  names <- (do.call(eval(fn), list(check = 2))) # check = 2 for name of parameters
   names(info$par) <- names
 
   info$coefficients <- coef <- info$par

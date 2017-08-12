@@ -11,6 +11,14 @@ b <- brix_simple(optimizer = optim,
                  hessian = TRUE,
                  X = normal_poisson_x, N = normal_poisson_n)
 
+test_that("The log-likehood works", {
+  #
+  expect_true(class(normal_poisson_log_likelihood(c(1,2,3), X = normal_poisson_x, N = normal_poisson_n)) == "numeric")
+  expect_true(class(normal_poisson_log_likelihood(c(1,2,3), X = normal_poisson_x, N = normal_poisson_n, check = 2)) == "character")
+  expect_true(normal_poisson_log_likelihood(check = 3) == "normal-poisson")
+})
+
+
 test_that("brix_simple outputs correctly", {
   #
   expect_output(str(b$par), "Named num")
@@ -24,6 +32,6 @@ test_that("Estimates are reasonable", {
                0.1, tolerance = 0.1)
   #
   expect_equal(unname(b$par["lambda"]), # removes name first
-                      o$par[3])
+               o$par[3])
 })
 
