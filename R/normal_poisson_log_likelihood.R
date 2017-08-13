@@ -67,6 +67,12 @@ normal_poisson_log_likelihood <- function(parameter = NULL, X = NULL, N = NULL, 
   if(check == 3) {
     return(c("normal-poisson"))
   }
+  if(check == 4) {
+    return(X)
+  }
+  if(check == 5) {
+    return(N)
+  }
 }
 
 #' @title
@@ -77,6 +83,8 @@ normal_poisson_log_likelihood <- function(parameter = NULL, X = NULL, N = NULL, 
 #'
 #' @param optimizer recommended choice is \code{optim}.
 #' @param fn function to be optimized.
+#' @param X \code{data.frame} of claims and deductibles.
+#' @param N \code{data.frame} of occurrences and deductibles.
 #' @param ... additional arguments passed to the \code{optimizer}, see \code{examples}.
 #'
 #' @details
@@ -113,7 +121,7 @@ normal_poisson_log_likelihood <- function(parameter = NULL, X = NULL, N = NULL, 
 #' summary(model)
 #'
 #' @export
-brix_simple <- function(optimizer, fn, ...) {
+brix_simple <- function(optimizer, fn, X, N, ...) {
 
   call <- match.call(expand.dots = TRUE)
   call[[1]] <- call$optimizer
@@ -121,11 +129,15 @@ brix_simple <- function(optimizer, fn, ...) {
   info <- eval(call, parent.frame())
 
   fn <- call[[2]]; #fn
-  names <- (do.call(eval(fn), list(check = 2))) # check = 2 for name of parameters
+  names <- do.call(eval(fn), list(check = 2)) # check = 2 for name of parameters
   names(info$par) <- names
 
   info$coefficients <- coef <- info$par
   info$call <- call
+  info$model <- do.call(eval(fn), list(check = 3)) # check = 3 for model
+
+  info$X <- eval(call[[3]])
+  info$N <- eval(call[[4]]) # Note: the call index depends on the function definition!!!
 
   class(info) <- "brix_simple"
 
@@ -138,6 +150,7 @@ print.brix_simple <- function(x, ...) {
   print(x$call)
   cat("\nOptimizer:\n")
   print(x[1:5])
+  cat("\nModel:", x$model)
 }
 
 #' @export

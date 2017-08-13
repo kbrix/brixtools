@@ -4,12 +4,16 @@
 \alias{brix_simple}
 \title{Simple optimizer}
 \usage{
-brix_simple(optimizer, fn, ...)
+brix_simple(optimizer, fn, X, N, ...)
 }
 \arguments{
 \item{optimizer}{recommended choice is \code{optim}.}
 
 \item{fn}{function to be optimized.}
+
+\item{X}{\code{data.frame} of claims and deductibles.}
+
+\item{N}{\code{data.frame} of occurrences and deductibles.}
 
 \item{...}{additional arguments passed to the \code{optimizer}, see \code{examples}.}
 }

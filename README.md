@@ -5,7 +5,7 @@ brixtools
 
 The package and site are still under construction...
 
-The goal of brixtools is to make it easier to model non-life insurance data with deductibles using maximum likelihood methods.
+The goal of brixtools is to make it easier to model non-life insurance data with deductibles using maximum likelihood methods. The package is currently in its infancy and many more features can be implemented.
 
 Installation
 ------------
@@ -72,4 +72,35 @@ summary(model)
 #> Log-likelihood value: -4188.422  AIC: 8382.845
 ```
 
-The true parameter values are 1.5 for the mean and standard deviation for the normal distribution and the mean for the non-thinned Poisson is 0.1. The possiblities for extensions are very large.
+The true parameter values are 1.5 for the mean and standard deviation for the normal distribution and the mean for the non-thinned Poisson is 0.1. The model can be augmented with the unobserved claims, i.e., the losses smaller that the deductibles. This is advantageous for performing various tests on the claims, e.g. the claim distribution assumption (is it really normal?). This is done using `augment`:
+
+``` r
+model_augmented <- augment(model)
+print(model_augmented)
+#> $shapiro
+#> 
+#>  Shapiro-Wilk normality test
+#> 
+#> data:  normal
+#> W = 0.99795, p-value = 0.505
+#> 
+#> 
+#> $ks
+#> 
+#>  One-sample Kolmogorov-Smirnov test
+#> 
+#> data:  normal
+#> D = 0.035326, p-value = 0.3073
+#> alternative hypothesis: two-sided
+```
+
+Checking the p-values, we see that they are large and it is fair to say that the normal distribution fits well. This is not surpirsing, as the data was normal to begin with. We may also compare Q-Q plots as follows:
+
+``` r
+plot(model_augmented)
+plot(model_augmented, augment = FALSE)
+```
+
+<img src="README-unnamed-chunk-4-1.png" width="425px" /><img src="README-unnamed-chunk-4-2.png" width="425px" />
+
+The augmented Q-Q plots looks great.

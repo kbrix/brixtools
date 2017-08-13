@@ -16,3 +16,4 @@ Suggests: testthat,
 URL: https://github.com/kbrix/brixtools
 BugReports: https://github.com/kbrix/brixtools/issues
 VignetteBuilder: knitr
+Imports: truncdist
