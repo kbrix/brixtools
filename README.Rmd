@@ -63,7 +63,7 @@ print(model_augmented)
 
 Checking the p-values, we see that they are large and it is fair to say that the normal distribution fits well. This is not surpirsing, as the data was normal to begin with. We may also compare Q-Q plots as follows:
 
-```{r, fig.width = 6, fig.height = 6, out.width=c('425px', '425px'), fig.show='hold'}
+```{r qq-plot, fig.width = 6, fig.height = 6, out.width=c('425px', '425px'), fig.show='hold'}
 plot(model_augmented)
 plot(model_augmented, augment = FALSE)
 ```

@@ -82,7 +82,7 @@ print(model_augmented)
 #>  Shapiro-Wilk normality test
 #> 
 #> data:  normal
-#> W = 0.99795, p-value = 0.505
+#> W = 0.99769, p-value = 0.3938
 #> 
 #> 
 #> $ks
@@ -90,7 +90,7 @@ print(model_augmented)
 #>  One-sample Kolmogorov-Smirnov test
 #> 
 #> data:  normal
-#> D = 0.035326, p-value = 0.3073
+#> D = 0.034845, p-value = 0.3262
 #> alternative hypothesis: two-sided
 ```
 
@@ -101,6 +101,6 @@ plot(model_augmented)
 plot(model_augmented, augment = FALSE)
 ```
 
-<img src="README-unnamed-chunk-4-1.png" width="425px" /><img src="README-unnamed-chunk-4-2.png" width="425px" />
+<img src="README-qq-plot-1.png" width="425px" /><img src="README-qq-plot-2.png" width="425px" />
 
 The augmented Q-Q plots looks great.
